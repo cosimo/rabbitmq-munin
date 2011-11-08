@@ -1,12 +1,12 @@
 #!/bin/sh
 # 
-# Plugin to monitor the number of consumers to RabbitMQ
+# Plugin to monitor the number of bindings to RabbitMQ
 #
 # Usage: Link or copy into /etc/munin/node.d/
 #
 # Parameters
-#     env.conn_warn <warning consumers>
-#     env.conn_crit <critical consumers>
+#     env.conn_warn <warning bindings>
+#     env.conn_crit <critical bindings>
 #
 # Magic markers (optional - only used by munin-config and some
 # installation scripts):
@@ -28,30 +28,30 @@ fi
 # graphs should look. 
 
 if [ "$1" = "config" ]; then
-        CONN_WARN=${consumer_warn:-500}
-        CONN_CRIT=${consumer_crit:-1000}
+        CONN_WARN=${binding_warn:-500}
+        CONN_CRIT=${binding_crit:-1000}
 
   # The host name this plugin is for. (Can be overridden to have
   # one machine answer for several)
 
   # The title of the graph
-  echo 'graph_title RabbitMQ consumers'
+  echo 'graph_title RabbitMQ bindings'
   # Arguments to "rrdtool graph". In this case, tell it that the
   # lower limit of the graph is '0', and that 1k=1000 (not 1024)
   echo 'graph_args --base 1000 -l 0'
   # The Y-axis label
-  echo 'graph_vlabel consumers'
+  echo 'graph_vlabel bindings'
   # We want Cur/Min/Avg/Max unscaled (i.e. 0.42 load instead of
   # 420 milliload)
   #echo 'graph_scale no'
   echo 'graph_category RabbitMQ'
 
-  echo "consumers.label Consumers"
-  echo "consumers.warning $CONN_WARN"
-  echo "consumers.critical $CONN_CRIT"
-  echo "consumers.info Number of active consumers"
+  echo "bindings.label Bindings"
+  echo "bindings.warning $CONN_WARN"
+  echo "bindings.critical $CONN_CRIT"
+  echo "bindings.info Number of active bindings"
 
-  echo 'graph_info Shows the number of consumers to RabbitMQ'
+  echo 'graph_info Shows the number of bindings to RabbitMQ'
   # Last, if run with the "config"-parameter, quit here (don't
   # display any data)
   exit 0
@@ -61,4 +61,4 @@ fi
 # real work - i.e. display the data. Almost always this will be
 # "value" subfield for every data field.
 
-echo "consumers.value $(rabbitmqctl list_consumers | grep -v "^Listing" | grep -v "done.$" | wc -l)"
+echo "bindings.value $(rabbitmqctl list_bindings | grep -v "^Listing" | grep -v "done.$" | wc -l)"
