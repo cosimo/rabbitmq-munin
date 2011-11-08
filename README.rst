@@ -27,9 +27,3 @@ file (on debian that is ``/etc/munin/plugin-conf.d``)::
 
     [rabbitmq-*]
     env.vhost vhostname
-
-Author
-======
-
-Ask Solem <askh@opera.com>
-Brad Gessler <opensource@polleverywhere.com>
