@@ -61,4 +61,4 @@ fi
 # real work - i.e. display the data. Almost always this will be
 # "value" subfield for every data field.
 
-echo "exchanges.value $(rabbitmqctl list_exchanges | grep -v "^Listing" | grep -v "done.$" | wc -l)"cp 
+echo "exchanges.value $(rabbitmqctl list_exchanges | grep -v "^Listing" | grep -v "done.$" | wc -l)"
