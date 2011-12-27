@@ -1,13 +1,11 @@
 #!/bin/sh
-# 
+#
 # Plugin to monitor the queues of a virtual_host in RabbitMQ
 #
 # Usage: Link or copy into /etc/munin/node.d/
 #
 # Parameters
 #     env.vhost <AMQ virtual host>
-#     env.queue_warn <warning queuesize>
-#     env.queue_crit <critical queuesize>
 #
 # Magic markers (optional - only used by munin-config and some
 # installation scripts):
@@ -26,16 +24,11 @@ if [ "$1" = "autoconf" ]; then
 fi
 
 # If run with the "config"-parameter, give out information on how the
-# graphs should look. 
+# graphs should look.
 
 VHOST=${vhost:-"/"}
-QUEUES=$(rabbitmqctl list_queues -p $VHOST name | \
-    grep -v '^Listing' | \
-    grep -v 'done\.$' | sed -e 's/[.-=]/_/g' )
- 
+
 if [ "$1" = "config" ]; then
-        QUEUE_WARN=${queue_warn:-10000}
-        QUEUE_CRIT=${queue_crit:-20000}
 
   # The host name this plugin is for. (Can be overridden to have
   # one machine answer for several)
@@ -47,9 +40,6 @@ if [ "$1" = "config" ]; then
   echo 'graph_args --base 1000 -l 0'
   # The Y-axis label
   echo 'graph_vlabel bytes'
-  # We want Cur/Min/Avg/Max unscaled (i.e. 0.42 load instead of
-  # 420 milliload)
-  #echo 'graph_scale no'
   echo 'graph_category RabbitMQ'
 
   echo "bytes.label Bytes"

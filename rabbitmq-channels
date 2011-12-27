@@ -1,12 +1,12 @@
 #!/bin/sh
-# 
+#
 # Plugin to monitor the number of channels to RabbitMQ
 #
 # Usage: Link or copy into /etc/munin/node.d/
 #
 # Parameters
-#     env.conn_warn <warning channels>
-#     env.conn_crit <critical channels>
+#     env.channel_warn <warning channels>
+#     env.channel_crit <critical channels>
 #
 # Magic markers (optional - only used by munin-config and some
 # installation scripts):
@@ -25,7 +25,7 @@ if [ "$1" = "autoconf" ]; then
 fi
 
 # If run with the "config"-parameter, give out information on how the
-# graphs should look. 
+# graphs should look.
 
 if [ "$1" = "config" ]; then
         CONN_WARN=${channel_warn:-500}
@@ -46,7 +46,7 @@ if [ "$1" = "config" ]; then
   #echo 'graph_scale no'
   echo 'graph_category RabbitMQ'
 
-  echo "channels.label Queues"
+  echo "channels.label Channels"
   echo "channels.warning $CONN_WARN"
   echo "channels.critical $CONN_CRIT"
   echo "channels.info Number of active channels"

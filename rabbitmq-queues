@@ -1,12 +1,12 @@
 #!/bin/sh
-# 
+#
 # Plugin to monitor the number of queues to RabbitMQ
 #
 # Usage: Link or copy into /etc/munin/node.d/
 #
 # Parameters
-#     env.conn_warn <warning queues>
-#     env.conn_crit <critical queues>
+#     env.queue_warn <warning queues>
+#     env.queue_crit <critical queues>
 #
 # Magic markers (optional - only used by munin-config and some
 # installation scripts):
@@ -25,11 +25,11 @@ if [ "$1" = "autoconf" ]; then
 fi
 
 # If run with the "config"-parameter, give out information on how the
-# graphs should look. 
+# graphs should look.
 
 if [ "$1" = "config" ]; then
-        CONN_WARN=${queue_warn:-500}
-        CONN_CRIT=${queue_crit:-1000}
+  CONN_WARN=${queue_warn:-500}
+  CONN_CRIT=${queue_crit:-1000}
 
   # The host name this plugin is for. (Can be overridden to have
   # one machine answer for several)
